@@ -1,6 +1,5 @@
 import re
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram import Router
 import asyncio
