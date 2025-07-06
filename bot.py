@@ -1,11 +1,15 @@
 import re
 from aiogram import Bot, Dispatcher, types
-from aiogram.utils import executor
+from aiogram.types import ParseMode
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram import Router
+import asyncio
 
-API_TOKEN = "7971051467:AAEgFdgmEcmfYmIWfSqQ_sCv0MNNzcrl49Y"  # Replace with your bot token
+API_TOKEN = '7971051467:AAEgFdgmEcmfYmIWfSqQ_sCv0MNNzcrl49Y'  # Replace with your bot token
 
 bot = Bot(token=API_TOKEN, parse_mode="HTML")
-dp = Dispatcher(bot)
+dp = Dispatcher(bot, storage=MemoryStorage())
+router = Router()
 
 # Clean URL for /f type links (standard cleaning)
 def clean_url(url):
@@ -63,6 +67,9 @@ async def handle_clean_text_url(message: types.Message):
     else:
         await message.reply("No valid URLs found!")
 
+async def main():
+    # Start polling for the bot
+    await dp.start_polling(router)
+
 if __name__ == "__main__":
-    print("Bot started!")
-    executor.start_polling(dp, skip_updates=True)
+    asyncio.run(main())
